@@ -10,7 +10,7 @@ fs
   });
 
 module.exports = {
-  entry: "./src/server/server.ts",
+  entry: "./src/App.ts",
   output: {
     path: __dirname + "/dist",
     filename: "server.js"

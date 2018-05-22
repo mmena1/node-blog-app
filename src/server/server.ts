@@ -1,19 +1,14 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
+import { createUser } from "./../user/endpoints/create";
+import { allUsers } from "./../user/endpoints/findAll";
+import { home } from "./endpoints/home";
 
-const port = process.env.PORT || 3000;
-
-const app = express();
+export const app = express();
 app.use(bodyParser.json());
 
-app.get("/", (req, res) =>
-  res.status(200).send({
-    message: "Welcome to the Blog App!"
-  })
-);
+app.use("/", home);
 
-app.listen(port, () => {
-  console.log(`Started on port ${port}`);
-});
+app.use("/users", createUser);
 
-module.exports = app;
+app.use("/users", allUsers);
