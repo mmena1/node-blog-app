@@ -6,10 +6,10 @@ import { home } from "../../src/server/endpoints/home";
 import * as sinon from "sinon";
 import * as createUser from "../../src/user/operations/create";
 
-describe("GET /", function() {
+describe("GET /api", function() {
   it("should return welcome message", function() {
     return request(app)
-      .get("/")
+      .get("/api")
       .expect(200)
       .then(res => expect(res.body).to.have.property("message"));
   });
@@ -18,7 +18,7 @@ describe("GET /", function() {
     var mock = sinon.mock(home);
     //mock.expects("get").once();
     return request(app)
-      .get("/")
+      .get("/api")
       .expect(200)
       .then(res => mock.restore());
   });

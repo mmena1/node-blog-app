@@ -10,12 +10,7 @@ createUser.post("/", (req, res) => {
     password: req.body.password,
     email: req.body.email
   };
-  create(user).then(
-    newUser => {
-      res.send(newUser);
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
+  create(user)
+    .then(newUser => res.status(201).send(newUser))
+    .catch(error => res.status(400).send(error));
 });

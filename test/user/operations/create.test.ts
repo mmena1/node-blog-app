@@ -4,6 +4,7 @@ import * as chaiAsPromised from "chai-as-promised";
 import { expect } from "chai";
 import { sequelize } from "../../../src/models/sequelize";
 import * as chai from "chai";
+import * as bcrypt from "bcryptjs";
 chai.use(chaiAsPromised);
 
 after(function(done) {
@@ -32,12 +33,18 @@ describe("User creation", function() {
   // });
 
   it("should create a User", function() {
+    let userHashed;
     const user: UserAttrs = {
       username: "usertest",
       password: "123456",
       email: "usertest@sb.com"
     };
-    return expect(create(user)).to.eventually.deep.include(user);
+    // create(user).then();
+    return expect(create(user)).to.eventually.be.fulfilled.then(newUser => {
+      expect(newUser).to.have.property("username", "usertest");
+      expect(newUser).to.have.property("email", "usertest@sb.com");
+      expect(bcrypt.compare(newUser.password, "123456")).to.eventually.be.true;
+    }); //.deep.include(user);
   });
 
   it("should not create a User with null fields", function() {

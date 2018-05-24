@@ -27,7 +27,6 @@ describe("Delete user", function() {
       .then(() => {
         return User.create(user1).then(user => {
           newUser = user;
-          console.log("user", user);
         });
       })
       .then(() => done());
@@ -42,7 +41,6 @@ describe("Delete user", function() {
   });
 
   it("should delete a user", function() {
-    console.log("newUser", newUser);
     return expect(
       destroy(newUser).then(() => User.findAll())
     ).to.be.eventually.eql([]);
