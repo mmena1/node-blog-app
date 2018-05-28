@@ -2,7 +2,6 @@ import { User, UserAttrs, UserInstance } from "./../../user/model";
 import update from "./../../user/operations/update";
 import { Router, Request, Response } from "express";
 import * as Promise from "bluebird";
-import * as R from "ramda";
 
 export const updateUser = Router();
 
@@ -39,7 +38,6 @@ export function patchUser(userId: number, body: any): Promise<UserInstance> {
       if (!user) {
         throw new Error("User Not Found");
       }
-
       return update(userId, body);
     })
   );

@@ -11,17 +11,18 @@ after(function(done) {
 });
 
 describe("All users", function() {
-  const user1: UserAttrs = {
-    username: "usertest",
-    password: "123456",
-    email: "usertest@sb.com"
-  };
-  const user2: UserAttrs = {
-    username: "usertest2",
-    password: "1234567",
-    email: "usertest2@sb.com"
-  };
-  const allUsers = [user1, user2];
+  const allUsers: UserAttrs[] = [
+    {
+      username: "usertest",
+      password: "123456",
+      email: "usertest@sb.com"
+    },
+    {
+      username: "usertest2",
+      password: "1234567",
+      email: "usertest2@sb.com"
+    }
+  ];
   beforeEach(done => {
     User.destroy({
       where: {
