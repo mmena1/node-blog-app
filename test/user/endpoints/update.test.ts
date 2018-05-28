@@ -8,6 +8,7 @@ import { UserInstance, UserAttrs, User } from "../../../src/user/model";
 import { sequelize } from "../../../src/models/sequelize";
 import * as chaiAsPromised from "chai-as-promised";
 import * as Promise from "bluebird";
+import * as R from "ramda";
 
 chai.use(chaiAsPromised);
 after(function(done) {
@@ -36,31 +37,12 @@ describe("PATCH /users", function() {
     ).to.eventually.be.rejectedWith(
       "Bad request. The user does not have the fields specified."
     );
-
-    //   return User.create(user1)
-    //     .then(
-    //       user => {
-    //         return expect(
-    //           patchUser(user.id, { email: "userName" }).tap(res =>
-    //             console.log("LKASJDLKJSA", res)
-    //           )
-    //         ).to.eventually.equal({
-    //           status: 400,
-    //           message: "Bad request. The user does not have the fields specified."
-    //         });
-    //       }
-    //       // FIXME: test is hanging up
-    //     )
-    //     .tap(res => console.log("ZXCVBNM", res));
-    // });
   });
 
   it("should call updateUser function", function() {
     return expect(
       User.create(user1).then(newUser => {
-        return patchUser(newUser.id, { email: "userName" }).tap(res =>
-          console.log("LKASJDLKJSA", res)
-        );
+        return patchUser(newUser.id, { email: "userName" });
       })
     ).to.eventually.be.fulfilled.then(updatedUser => {
       //

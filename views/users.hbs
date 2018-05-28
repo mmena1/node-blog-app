@@ -7,9 +7,16 @@
 </head>
 
 <body>
-    <header>Header</header>
-    <p>{{welcomeMessage}}</p>
+    {{> header}}
+    <div>
+        {{#each users}}
+        <div class="col-md-12">
+            <h2>{{username}}</h2>
+            <p>{{email}}</p>
+        </div>
+        {{/each}}
+    </div>
 </body>
-<footer>Copyright</footer>
+{{> footer}}
 
 </html>

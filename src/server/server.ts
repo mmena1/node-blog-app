@@ -11,8 +11,11 @@ import * as hbs from "hbs";
 export const app = express();
 app.use(bodyParser.json());
 
-hbs.registerPartials(__dirname + "/views/partials");
+const routeToPartials = "views/partials";
+hbs.registerPartials(routeToPartials);
 app.engine("handlebars", exphbs({ extname: ".hbs" }));
+
+hbs.registerHelper("getCurrentYear", () => new Date().getFullYear());
 
 app.use("/api/", home);
 app.use("/api/users", createUser);
