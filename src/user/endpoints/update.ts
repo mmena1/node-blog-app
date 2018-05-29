@@ -7,11 +7,11 @@ export const updateUser = Router();
 
 //type Callback = { status: number; message: any };
 
-updateUser.patch("/:userId", (req, res) =>
+updateUser.patch("/:userId", (req, res) => {
   patchUser(req.params.userId, req.body)
     .then(updatedUser => res.status(200).send(updatedUser))
-    .catch(error => res.status(400).send(error))
-);
+    .catch(error => res.status(400).send(error));
+});
 
 function validator(body: Object): Promise<Object> {
   return new Promise((resolve, reject) => {

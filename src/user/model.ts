@@ -31,6 +31,7 @@ export const User = sequelize.define<UserInstance, UserAttrs>("User", {
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   }
 });
