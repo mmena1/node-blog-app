@@ -24,7 +24,6 @@ describe("User creation", function() {
   });
 
   it("should create a User", function() {
-    let userHashed;
     const user: UserAttrs = {
       username: "usertest",
       password: "123456",
@@ -34,7 +33,10 @@ describe("User creation", function() {
     return expect(create(user)).to.eventually.be.fulfilled.then(newUser => {
       expect(newUser).to.have.property("username", "usertest");
       expect(newUser).to.have.property("email", "usertest@sb.com");
-      expect(bcrypt.compare(newUser.password, "123456")).to.eventually.be.true;
+      console.log("password", newUser.password);
+
+      return expect(bcrypt.compare("123456", newUser.password)).to.eventually.be
+        .true;
     }); //.deep.include(user);
   });
 

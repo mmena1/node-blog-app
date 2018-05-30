@@ -1,9 +1,18 @@
 <header>
+    {{#if user}}
+    <div>
+        <p>Hi, {{user}}</p>
+        <input type="button" value="Log out" onclick="location.href='/logout';">
+    </div>
+    {{/if}}
     <h1>{{pageTitle}}</h1>
     <p>
         <a href="/">Home</a>
     </p>
     <p>
         <a href="/users">Users</a>
+    </p>
+    <p>
+        <a href="/index">Index</a>
     </p>
 </header>

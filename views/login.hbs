@@ -7,10 +7,12 @@
 </head>
 
 <body>
-    {{> header}}
+
+    {{#if message}}
     <div id="messages">
-        {{messages}}
+        {{message}}
     </div>
+    {{/if}} {{> header}}
     <form method="POST">
         <div class="col-xs-4">
             Email:

@@ -1,5 +1,6 @@
 import findAll from "./../../user/operations/findAll";
 import { Router } from "express";
+import renderAttrs from "../../util/renderAttrs";
 
 export const allUsers = Router();
 
@@ -14,11 +15,13 @@ allUsers.get("/users", (req, res) => {
     .then(users => {
       if (users.length > 0) {
         res.render("users.hbs", {
+          ...renderAttrs(req),
           pageTitle: "Users Page",
           users
         });
       } else {
         res.render("users.hbs", {
+          ...renderAttrs(req),
           pageTitle: "Users Page",
           message: "No users in database"
         });

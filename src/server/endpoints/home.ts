@@ -1,4 +1,5 @@
 import { Router } from "express";
+import renderAttrs from "../../util/renderAttrs";
 
 export const home = Router();
 home.get("/api", (req, res) => {
@@ -10,6 +11,7 @@ home.get("/api", (req, res) => {
 
 home.get("/", (req, res) => {
   res.render("home.hbs", {
+    ...renderAttrs(req),
     pageTitle: "Welcome Page",
     welcomeMessage: "Welcome message!"
   });

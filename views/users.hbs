@@ -9,7 +9,7 @@
 <body>
     {{> header}}
     <div>
-        {{message}} {{#each users}}
+        {{#if message}} {{message}} {{/if}} {{#each users}}
         <div class="col-md-12">
             <h2>{{username}}</h2>
             <p>{{email}}</p>

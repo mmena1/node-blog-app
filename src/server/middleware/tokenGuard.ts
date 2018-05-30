@@ -11,15 +11,23 @@ function getTokenFromHeaders(headers: IncomingHttpHeaders) {
 }
 
 export const tokenGuard: (() => RequestHandler) = () => (req, res, next) => {
-  const token =
-    getTokenFromHeaders(req.headers) ||
-    req.query.token ||
-    req.body.token ||
-    "11";
+  const token = getTokenFromHeaders(req.headers) || req.session.token || "";
   const hasAccess = verifyToken(token, "0.rfyj3n9nzh");
 
   hasAccess.then(a => {
-    if (!a) return res.status(403).send({ message: "No access" });
+    if (!a)
+      return (
+        res
+          .status(403)
+          // .send({
+          //   message: "You have no access permissions to view this resource"
+          // })
+          .redirect("/login?source=" + req.path)
+        // .render("login.hbs", {
+        //   pageTitle: "Login Page",
+        //   message: "You have no access permissions to view this resource"
+        // })
+      );
     next();
   });
 };

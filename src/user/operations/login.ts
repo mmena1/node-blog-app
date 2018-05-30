@@ -11,7 +11,7 @@ export default function(email: string, password: string) {
     return bcrypt.compare(password, user.password).then(valid => {
       if (valid) {
         const { id, email } = user;
-        return { token: jwt.sign({ id, email }, jwtSecret) };
+        return { token: jwt.sign({ id, email }, jwtSecret), user };
       } else {
         throw new Error("Invalid password");
       }

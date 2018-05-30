@@ -18,6 +18,7 @@
     "@types/chai-as-promised": "^7.1.0",
     "@types/express": "^4.11.1",
     "@types/express-handlebars": "^0.0.30",
+    "@types/express-session": "^1.15.9",
     "@types/hbs": "^4.0.0",
     "@types/jsonwebtoken": "^7.2.7",
     "@types/mocha": "^5.2.0",
@@ -42,6 +43,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
     "hbs": "^4.0.1",
     "jsonwebtoken": "^8.2.1"
   }

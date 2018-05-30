@@ -1,7 +1,9 @@
-import { Router } from "express";
+import { Router, Request } from "express";
 import getLogin from "../../user/operations/login";
 import { UserInstance } from "../../user/model";
 import verifyToken from "../../user/operations/verifyToken";
+
+import renderAttrs from "../../util/renderAttrs";
 
 export const login = Router();
 login.post("/login", (req, res) => {
@@ -9,13 +11,20 @@ login.post("/login", (req, res) => {
   const password = req.body.password;
 
   getLogin(email, password)
-    .then(token =>
-      verifyToken(token.token, "0.rfyj3n9nzh").then(valid => {
+    .then(userAccount =>
+      verifyToken(userAccount.token, "0.rfyj3n9nzh").then(valid => {
         if (valid) {
-          res.render("home.hbs", {
-            pageTitle: "Welcome Page",
-            welcomeMessage: "Welcome message!"
-          });
+          req.session.token = userAccount.token;
+          req.session.user = userAccount.user.username;
+          if (req.query.source) {
+            res.redirect(req.query.source);
+          } else {
+            res.render("home.hbs", {
+              ...renderAttrs(req),
+              pageTitle: "Welcome Page",
+              welcomeMessage: "Welcome message!"
+            });
+          }
         } else {
           res.render("login.hbs", {
             pageTitle: "Login Page",
