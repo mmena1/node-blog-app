@@ -8,6 +8,7 @@ import { home } from "./endpoints/home";
 import * as exphbs from "express-handlebars";
 import * as hbs from "hbs";
 import { signup } from "./endpoints/signup";
+import { tokenGuard } from "./middleware/tokenGuard";
 
 export const app = express();
 app.use(bodyParser.json());
@@ -22,10 +23,10 @@ hbs.registerPartials(routeToPartials);
 app.engine("handlebars", exphbs({ extname: ".hbs" }));
 
 hbs.registerHelper("getCurrentYear", () => new Date().getFullYear());
-
+app.use("/", signup);
+app.use(tokenGuard());
 app.use("/", home);
 app.use("/api/users", createUser);
 app.use("/api/users", deleteUser);
 app.use("/api/users", updateUser);
 app.use("/", allUsers);
-app.use("/", signup);

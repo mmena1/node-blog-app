@@ -23,30 +23,15 @@ describe("All users", function() {
       email: "usertest2@sb.com"
     }
   ];
-  beforeEach(done => {
-    User.destroy({
-      where: {
-        id: { [sequelize.Op.gt]: -100 }
-      },
-      truncate: true
-    })
-      .then(() => {
-        return User.bulkCreate(allUsers);
-      })
-      .then(() => done());
+  beforeEach(() => {
+    return User.destroy({ truncate: true }).then(() => {
+      return User.bulkCreate(allUsers);
+    });
   });
 
-  afterEach(done => {
-    User.destroy({
-      where: {
-        id: { [sequelize.Op.gt]: -100 }
-      }
-    }).then(() => done());
+  afterEach(() => {
+    return User.destroy({ truncate: true });
   });
-
-  // afterEach(() => {aa
-  //   transaction.rollback();
-  // });
 
   it("should return al Users", function() {
     return expect(findAll())

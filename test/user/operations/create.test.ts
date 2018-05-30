@@ -12,25 +12,16 @@ after(function(done) {
 });
 
 describe("User creation", function() {
-  beforeEach(done => {
-    User.destroy({
-      where: {
-        id: { [sequelize.Op.gt]: -100 }
-      }
-    }).then(() => done());
+  beforeEach(() => {
+    return User.destroy({ truncate: true });
   });
 
-  after(done => {
-    User.destroy({
-      where: {
-        id: { [sequelize.Op.gt]: -100 }
-      }
-    }).then(() => done());
-  });
+  after(() => {
+    return User.destroy({ truncate: true });
 
-  // afterEach(() => {aa
-  //   transaction.rollback();
-  // });
+    // afterEach(() => {aa
+    //   transaction.rollback();
+  });
 
   it("should create a User", function() {
     let userHashed;

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{pageTitle}}</title>
+</head>
+
+<body>
+    {{> header}}
+    <div id="messages">
+        {{messages}}
+    </div>
+    <form method="POST">
+        <div class="col-xs-4">
+            Email:
+        </div>
+        <div class="col-xs-4">
+            <input name="email" type="email" required></input>
+        </div>
+        <div class="col-xs-4">
+            Password:
+        </div>
+        <div class="col-xs-4">
+            <input name="password" type="password" required></input>
+        </div>
+
+        <input type="submit"></input>
+
+    </form>
+</body>
+{{> footer}}
+
+</html>

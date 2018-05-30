@@ -17,27 +17,16 @@ describe("Delete user", function() {
     password: "123456",
     email: "usertest@sb.com"
   };
-  beforeEach(done => {
-    User.destroy({
-      where: {
-        id: { [sequelize.Op.gt]: -100 }
-      },
-      truncate: true
-    })
-      .then(() => {
-        return User.create(user1).then(user => {
-          newUser = user;
-        });
-      })
-      .then(() => done());
+  beforeEach(() => {
+    return User.destroy({ truncate: true }).then(() => {
+      return User.create(user1).then(user => {
+        newUser = user;
+      });
+    });
   });
 
-  afterEach(done => {
-    User.destroy({
-      where: {
-        id: { [sequelize.Op.gt]: -100 }
-      }
-    }).then(() => done());
+  afterEach(() => {
+    return User.destroy({ truncate: true });
   });
 
   it("should delete a user", function() {

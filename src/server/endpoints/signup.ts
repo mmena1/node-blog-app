@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { createUser } from "../../user/endpoints/create";
 import create from "../../user/operations/create";
 import { UserInstance } from "../../user/model";
 
