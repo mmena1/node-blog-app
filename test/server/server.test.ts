@@ -5,6 +5,7 @@ import * as chai from "chai";
 import { UserInstance, UserAttrs, User } from "../../src/user/model";
 import create from "../../src/user/operations/create";
 import login from "../../src/user/operations/login";
+import { sequelize } from "../../src/models/sequelize";
 
 describe("GET /api", function() {
   const user1: UserAttrs = {
@@ -13,11 +14,23 @@ describe("GET /api", function() {
     email: "usertest@sb.com"
   };
   beforeEach(() => {
-    return User.destroy({ truncate: true });
+    return User.destroy({
+      where: {
+        id: {
+          [sequelize.Op.gt]: 0
+        }
+      }
+    });
   });
 
   afterEach(() => {
-    return User.destroy({ truncate: true });
+    return User.destroy({
+      where: {
+        id: {
+          [sequelize.Op.gt]: 0
+        }
+      }
+    });
   });
   it("should return welcome message", function() {
     return create(user1).then(user => {

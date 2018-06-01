@@ -18,7 +18,13 @@ describe("Update a user", function() {
     email: "usertest@sb.com"
   };
   beforeEach(() => {
-    return User.destroy({ truncate: true }).then(() => {
+    return User.destroy({
+      where: {
+        id: {
+          [sequelize.Op.gt]: 0
+        }
+      }
+    }).then(() => {
       return User.create(user1).then(user => {
         newUser = user;
       });
@@ -26,7 +32,13 @@ describe("Update a user", function() {
   });
 
   afterEach(() => {
-    return User.destroy({ truncate: true });
+    return User.destroy({
+      where: {
+        id: {
+          [sequelize.Op.gt]: 0
+        }
+      }
+    });
   });
 
   it("should update a user", function() {

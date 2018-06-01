@@ -1,5 +1,6 @@
 import * as Sequelize from "sequelize";
 import { sequelize } from "../models/sequelize";
+//import { Post } from "../post/model";
 
 export interface UserInstance
   extends Sequelize.Instance<UserAttrs>,
@@ -14,7 +15,7 @@ export interface UserAttrs {
   email: string;
 }
 
-export const User = sequelize.define<UserInstance, UserAttrs>("User", {
+export const User = sequelize.define<UserInstance, UserAttrs>("user", {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -35,3 +36,7 @@ export const User = sequelize.define<UserInstance, UserAttrs>("User", {
     unique: true
   }
 });
+//User.hasMany(Post, {
+//  foreignKey: "userId",
+//  as: "userPosts"
+//});

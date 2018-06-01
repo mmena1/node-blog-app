@@ -17,7 +17,13 @@ describe("PATCH /api/users", function() {
     email: "usertest@sb.com"
   };
   beforeEach(() => {
-    User.destroy({ truncate: true });
+    User.destroy({
+      where: {
+        id: {
+          [sequelize.Op.gt]: 0
+        }
+      }
+    });
   });
 
   it("should throw an error with an invalid field", function() {

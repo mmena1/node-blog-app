@@ -17,7 +17,9 @@ describe("POST /api/users", function() {
     email: "usertest@sb.com"
   };
   beforeEach(() => {
-    User.destroy({ truncate: true });
+    User.truncate({
+      cascade: true
+    });
   });
 
   it("should call postUser function", function() {

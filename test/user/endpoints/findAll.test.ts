@@ -24,7 +24,13 @@ describe("POST /api/users", function() {
     }
   ];
   beforeEach(() => {
-    User.destroy({ truncate: true });
+    User.destroy({
+      where: {
+        id: {
+          [sequelize.Op.gt]: 0
+        }
+      }
+    });
   });
 
   it("should call postUser function", function() {

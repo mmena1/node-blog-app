@@ -13,11 +13,23 @@ after(function(done) {
 
 describe("User creation", function() {
   beforeEach(() => {
-    return User.destroy({ truncate: true });
+    return User.destroy({
+      where: {
+        id: {
+          [sequelize.Op.gt]: 0
+        }
+      }
+    });
   });
 
   after(() => {
-    return User.destroy({ truncate: true });
+    return User.destroy({
+      where: {
+        id: {
+          [sequelize.Op.gt]: 0
+        }
+      }
+    });
 
     // afterEach(() => {aa
     //   transaction.rollback();
@@ -33,7 +45,6 @@ describe("User creation", function() {
     return expect(create(user)).to.eventually.be.fulfilled.then(newUser => {
       expect(newUser).to.have.property("username", "usertest");
       expect(newUser).to.have.property("email", "usertest@sb.com");
-      console.log("password", newUser.password);
 
       return expect(bcrypt.compare("123456", newUser.password)).to.eventually.be
         .true;

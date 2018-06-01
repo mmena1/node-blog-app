@@ -24,13 +24,25 @@ describe("All users", function() {
     }
   ];
   beforeEach(() => {
-    return User.destroy({ truncate: true }).then(() => {
+    return User.destroy({
+      where: {
+        id: {
+          [sequelize.Op.gt]: 0
+        }
+      }
+    }).then(() => {
       return User.bulkCreate(allUsers);
     });
   });
 
   afterEach(() => {
-    return User.destroy({ truncate: true });
+    return User.destroy({
+      where: {
+        id: {
+          [sequelize.Op.gt]: 0
+        }
+      }
+    });
   });
 
   it("should return al Users", function() {

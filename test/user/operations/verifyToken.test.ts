@@ -20,13 +20,25 @@ describe("Validate auth token", function() {
     email: "usertest@sb.com"
   };
   beforeEach(() => {
-    return User.destroy({ truncate: true }).then(() => {
+    return User.destroy({
+      where: {
+        id: {
+          [sequelize.Op.gt]: 0
+        }
+      }
+    }).then(() => {
       return create(user1);
     });
   });
 
   afterEach(() => {
-    return User.destroy({ truncate: true });
+    return User.destroy({
+      where: {
+        id: {
+          [sequelize.Op.gt]: 0
+        }
+      }
+    });
   });
 
   // afterEach(() => {aa
