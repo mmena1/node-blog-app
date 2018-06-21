@@ -4,6 +4,7 @@ import { UserInstance } from "../../user/model";
 import verifyToken from "../../user/operations/verifyToken";
 
 import renderAttrs from "../../util/renderAttrs";
+import config from "../../util/index";
 
 export const login = Router();
 login.post("/login", (req, res) => {
@@ -12,18 +13,14 @@ login.post("/login", (req, res) => {
 
   getLogin(email, password)
     .then(userAccount =>
-      verifyToken(userAccount.token, "0.rfyj3n9nzh").then(valid => {
+      verifyToken(userAccount.token, config.jwt_secret).then(valid => {
         if (valid) {
           req.session.token = userAccount.token;
-          req.session.user = userAccount.user.username;
+          req.session.user = userAccount.user;
           if (req.query.source) {
             res.redirect(req.query.source);
           } else {
-            res.render("home.hbs", {
-              ...renderAttrs(req),
-              pageTitle: "Welcome Page",
-              welcomeMessage: "Welcome message!"
-            });
+            res.redirect("/home");
           }
         } else {
           res.render("login.hbs", {

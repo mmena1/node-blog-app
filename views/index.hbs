@@ -9,6 +9,17 @@
 <body>
     {{> header}}
     <p>All posts go here...</p>
+    <div>
+        {{#if message}} {{message}} {{/if}} {{#each posts}}
+        <article>
+            <h1>{{title}}</h1>
+            <p>{{content}}</p>
+            <p>
+                <small>Author: {{userId}}</small>
+            </p>
+        </article>
+        <hr> {{/each}}
+    </div>
 </body>
 {{> footer}}
 

@@ -9,7 +9,24 @@
 <body>
     {{> header}}
     <p>{{welcomeMessage}}</p>
+    <input type="button" value="Create post" onclick="location.href='/post';">
     <p>Only owned posts go here...</p>
+    <div>
+        {{#if message}} {{message}} {{/if}} {{#each posts}}
+        <article>
+            <h1>{{title}}</h1>
+            <p>{{content}}</p>
+        </article>
+        <form action="/home" method="post">
+            <input type="hidden" name="post_id" value="{{id}}">
+            <input type="submit" value="Delete">
+        </form>
+        <form action="/post/update" method="get">
+            <input type="hidden" name="post_id" value="{{id}}">
+            <input type="submit" value="Update">
+        </form>
+        <hr> {{/each}}
+    </div>
 </body>
 {{> footer}}
 

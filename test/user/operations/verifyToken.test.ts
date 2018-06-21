@@ -7,6 +7,7 @@ import { expect, should } from "chai";
 import { sequelize } from "../../../src/models/sequelize";
 import * as chai from "chai";
 import * as jwt from "jsonwebtoken";
+import config from "../../../src/util/index";
 chai.use(chaiAsPromised);
 
 after(function(done) {
@@ -50,7 +51,7 @@ describe("Validate auth token", function() {
       login("usertest@sb.com", "123456")
     ).to.eventually.be.fulfilled.then(token => {
       return expect(
-        verifyToken(token.token, "0.rfyj3n9nzh")
+        verifyToken(token.token, config.jwt_secret)
       ).to.eventually.be.fulfilled.then(res => expect(res).to.be.true);
     });
   });

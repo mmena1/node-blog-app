@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import { IncomingHttpHeaders } from "http";
 import verifyToken from "../../user/operations/verifyToken";
+import config from "../../util/index";
 
 function getTokenFromHeaders(headers: IncomingHttpHeaders) {
   const header = headers.authorization as string;
@@ -12,7 +13,7 @@ function getTokenFromHeaders(headers: IncomingHttpHeaders) {
 
 export const tokenGuard: (() => RequestHandler) = () => (req, res, next) => {
   const token = getTokenFromHeaders(req.headers) || req.session.token || "";
-  const hasAccess = verifyToken(token, "0.rfyj3n9nzh");
+  const hasAccess = verifyToken(token, config.jwt_secret);
 
   hasAccess.then(a => {
     if (!a)

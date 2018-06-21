@@ -15,20 +15,19 @@
     {{/if}} {{> header}}
     <form method="POST">
         <div class="col-xs-4">
-            Email:
+            title:
         </div>
         <div class="col-xs-4">
-            <input name="email" type="email" required></input>
+            <input name="title" type="text" required value="{{title}}"></input>
         </div>
         <div class="col-xs-4">
-            Password:
+            Content:
         </div>
         <div class="col-xs-4">
-            <input name="password" type="password" required></input>
+            <textarea name="content" id="" cols="50" rows="10" required value>{{content}}</textarea>
         </div>
 
-        <input type="submit" value="Login"></input>
-        <input type="button" value="Sign Up" onclick="location.href='/signup';">
+        <input type="submit"></input>
 
     </form>
 </body>

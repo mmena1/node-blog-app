@@ -4,15 +4,16 @@
         <p>Hi, {{user}}</p>
         <input type="button" value="Log out" onclick="location.href='/logout';">
     </div>
-    {{/if}}
+    {{else}}
+    <input type="button" value="Sign Up" onclick="location.href='/signup';"> {{/if}}
     <h1>{{pageTitle}}</h1>
     <p>
-        <a href="/">Home</a>
+        <a href="/home">Home</a>
     </p>
     <p>
         <a href="/users">Users</a>
     </p>
     <p>
-        <a href="/index">Index</a>
+        <a href="/">Index</a>
     </p>
 </header>

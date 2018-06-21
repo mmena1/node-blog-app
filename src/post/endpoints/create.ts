@@ -1,4 +1,3 @@
-import {} from "../model";
 import create from "../operations/create";
 import { Router } from "express";
 import { PostAttrs, PostInstance } from "../model";
@@ -6,14 +5,14 @@ import { PostAttrs, PostInstance } from "../model";
 export const createPost = Router();
 
 // "/users/:userId/posts"
-createPost.post("/", (req, res) => {
+createPost.post("/post", (req, res) => {
   const post: PostAttrs = {
     title: req.body.title,
     content: req.body.content,
-    userId: req.params.userId
+    userId: req.session.user.id
   };
   postPost(post)
-    .then(newPost => res.status(201).send(newPost))
+    .then(newPost => res.status(201).redirect("/home"))
     .catch(error => res.status(400).send(error));
 });
 

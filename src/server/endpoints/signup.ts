@@ -13,11 +13,7 @@ signup.post("/signup", (req, res) => {
     password,
     email
   })
-    .then((user: UserInstance) =>
-      res.status(200).send({
-        message: "User created!"
-      })
-    )
+    .then((user: UserInstance) => res.status(200).redirect("/home"))
     .catch(error => {
       res.render("signup.hbs", {
         pageTitle: "Sign Up Page",

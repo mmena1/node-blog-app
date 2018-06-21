@@ -1,44 +1,43 @@
-import { User, UserAttrs, UserInstance } from "./../../user/model";
-import update from "./../../user/operations/update";
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import * as Promise from "bluebird";
+import { Post } from "../model";
+import update from "../operations/update";
 
-export const updateUser = Router();
+export const updatePost = Router();
 
-//type Callback = { status: number; message: any };
+updatePost.get("/post/update", (req, res) => {
+  console.log("Post Id: ", req.query.post_id);
 
-updateUser.patch("/:userId", (req, res) => {
-  patchUser(req.params.userId, req.body)
-    .then(updatedUser => res.status(200).send(updatedUser))
-    .catch(error => res.status(400).send(error));
+  if (req.query.post_id) {
+    Post.findOne({
+      where: { id: req.query.post_id }
+    }).then(post => {
+      res.render("post.hbs", {
+        pageTitle: "Update post",
+        title: post.title,
+        content: post.content
+      });
+    });
+  } else {
+    res.render("post.hbs", {
+      pageTitle: "Create new post"
+    });
+  }
 });
 
-function validator(body: Object): Promise<Object> {
-  return new Promise((resolve, reject) => {
-    const userAttrs: UserAttrs = { username: "a", email: "a", password: "a" };
-    const validFields = Object.keys(userAttrs);
-    const valid = Object.keys(body)
-      .map(key => validFields.indexOf(key))
-      .every(x => x !== -1);
+updatePost.post("/post/update", (req, res) => {
+  console.log("Post Id: ", req.query.post_id);
 
-    // FIXME: Validate properly, body is an object with 1 or more fields to update, its not necessarily of type UserAttrs
-    if (valid) {
-      resolve(body);
-    } else {
-      reject(
-        new Error("Bad request. The user does not have the fields specified.")
-      );
-    }
-  });
-}
-
-export function patchUser(userId: number, body: any): Promise<UserInstance> {
-  return validator(body).then(body =>
-    User.findById(userId).then(user => {
-      if (!user) {
-        throw new Error("User Not Found");
-      }
-      return update(userId, body);
-    })
-  );
-}
+  if (req.query.post_id) {
+    update(req.query.post_id, {
+      title: req.body.title,
+      content: req.body.content
+    }).then(_ => {
+      res.redirect("/home");
+    });
+  } else {
+    res.render("post.hbs", {
+      pageTitle: "Create new post"
+    });
+  }
+});

@@ -12,6 +12,9 @@ import { signup } from "./endpoints/signup";
 import { tokenGuard } from "./middleware/tokenGuard";
 import * as session from "express-session";
 import { index } from "./endpoints/index";
+import config from "../util/index";
+import { createPost } from "../post/endpoints/create";
+import { updatePost } from "../post/endpoints/update";
 
 export const app = express();
 app.use(bodyParser.json());
@@ -28,7 +31,7 @@ app.use(
   session({
     resave: true,
     saveUninitialized: true,
-    secret: "SOMERANDOMSECRETHERE",
+    secret: config.session_secret,
     cookie: { maxAge: 600000 /* 10 minutes in milliseconds */ }
   })
 );
@@ -38,6 +41,8 @@ app.use("/", login);
 app.use("/", index);
 app.use(tokenGuard());
 app.use("/", home);
+app.use("/", createPost);
+app.use("/", updatePost);
 app.use("/api/users", createUser);
 app.use("/api/users", deleteUser);
 app.use("/api/users", updateUser);
