@@ -1,21 +1,18 @@
-import findAllByUser from "./../../../src/post/operations/findAllByUser";
 import createPost from "./../../../src/post/operations/create";
 import createUser from "./../../../src/user/operations/create";
 import { UserAttrs, User } from "./../../../src/user/model";
 import * as chaiAsPromised from "chai-as-promised";
-import { expect, should } from "chai";
+import { expect } from "chai";
 import { sequelize } from "../../../src/models/sequelize";
 import * as chai from "chai";
-import { PostAttrs } from "../../../src/post/model";
-import findAll from "../../../src/post/operations/findAll";
-import { getPostsWithUsers } from "../../../src/server/endpoints/index";
+import { getPostsWithUsers, PostWithUser } from "../../../src/server/endpoints/index";
 chai.use(chaiAsPromised);
 
 after(function(done) {
   sequelize.close().then(() => done());
 });
 
-describe.only("Get all posts", function() {
+describe("Get all posts", function() {
   const user1: UserAttrs = {
     username: "usertest",
     password: "123456",
@@ -41,10 +38,10 @@ describe.only("Get all posts", function() {
 
   it("getPostsWithUsers returns all the posts with the users", function() {
     return expect(getPostsWithUsers()).to.eventually.be.fulfilled.then(
-      posts => {
+      (posts: PostWithUser[]) => {
         expect(posts).to.have.lengthOf(1);
-        expect(posts[0]).to.deep.include(user1);
-        expect(posts[0]).to.deep.include(post1);
+        expect(posts[0].user.username).to.deep.include(user1.username);
+        expect(posts[0].post.title).to.deep.include(post1.title);
       }
     );
   });

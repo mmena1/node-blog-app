@@ -5,7 +5,7 @@ import { PostAttrs, PostInstance } from "../model";
 export const createPost = Router();
 
 // "/users/:userId/posts"
-createPost.post("/post", (req, res) => {
+createPost.post("/newPost", (req, res) => {
   const post: PostAttrs = {
     title: req.body.title,
     content: req.body.content,

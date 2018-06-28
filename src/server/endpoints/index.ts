@@ -2,8 +2,8 @@ import { Router } from "express";
 import renderAttrs from "../../util/renderAttrs";
 import findAll from "../../post/operations/findAll";
 import * as Promise from "bluebird";
-import { Post, PostModel } from "../../post/model";
-import { User, UserModel } from "../../user/model";
+import { PostAttrs } from "../../post/model";
+import { User, UserAttrs } from "../../user/model";
 
 export const index = Router();
 
@@ -18,8 +18,8 @@ index.get("/", (req, res) => {
 });
 
 export interface PostWithUser {
-  post: PostModel;
-  user: UserModel;
+  post: PostAttrs;
+  user: UserAttrs;
 }
 
 export function getPostsWithUsers(): Promise<PostWithUser[]> {

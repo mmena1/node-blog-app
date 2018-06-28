@@ -36,8 +36,14 @@ home.get("/home", (req, res) => {
 home.post("/home", (req, res) => {
   Post.findOne({ where: { id: req.body.post_id } }).then(post => {
     _delete(post).then(() => {
-      // TODO add a message for succezzfull delete
+      // TODO add a message for successfull delete
       res.redirect("/home");
     });
+  });
+});
+
+home.get("/newPost", (_req, res) => {
+  res.render("post.hbs", {
+    pageTitle: "Create new post"
   });
 });

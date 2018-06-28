@@ -6,7 +6,6 @@ import update from "../operations/update";
 export const updatePost = Router();
 
 updatePost.get("/post/update", (req, res) => {
-  console.log("Post Id: ", req.query.post_id);
 
   if (req.query.post_id) {
     Post.findOne({
@@ -26,7 +25,6 @@ updatePost.get("/post/update", (req, res) => {
 });
 
 updatePost.post("/post/update", (req, res) => {
-  console.log("Post Id: ", req.query.post_id);
 
   if (req.query.post_id) {
     update(req.query.post_id, {

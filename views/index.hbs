@@ -10,12 +10,12 @@
     {{> header}}
     <p>All posts go here...</p>
     <div>
-        {{#if message}} {{message}} {{/if}} {{#each posts}}
+        {{#if message}} {{message}} {{/if}} {{#each postsWithUsers}}
         <article>
-            <h1>{{title}}</h1>
-            <p>{{content}}</p>
+            <h1>{{post.title}}</h1>
+            <p>{{post.content}}</p>
             <p>
-                <small>Author: {{userId}}</small>
+                <small>Author: {{user.username}}</small>
             </p>
         </article>
         <hr> {{/each}}

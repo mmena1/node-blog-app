@@ -9,7 +9,7 @@
 <body>
     {{> header}}
     <p>{{welcomeMessage}}</p>
-    <input type="button" value="Create post" onclick="location.href='/post';">
+    <input type="button" value="Create post" onclick="location.href='/newPost';">
     <p>Only owned posts go here...</p>
     <div>
         {{#if message}} {{message}} {{/if}} {{#each posts}}
