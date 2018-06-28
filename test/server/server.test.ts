@@ -32,7 +32,7 @@ describe("GET /api", function() {
       }
     });
   });
-  it.only("should return welcome message", function() {
+  it("should return welcome message", function() {
     return create(user1).then(user => {
       return expect(
         login("usertest@sb.com", "123456")

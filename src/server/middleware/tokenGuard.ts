@@ -23,7 +23,7 @@ export const tokenGuard: (() => RequestHandler) = () => (req, res, next) => {
           // .send({
           //   message: "You have no access permissions to view this resource"
           // })
-          .redirect("/login?source=" + req.path)
+          .redirect("/login?source=" + (req.path === "/index" ? "/" : req.path))
         // .render("login.hbs", {
         //   pageTitle: "Login Page",
         //   message: "You have no access permissions to view this resource"

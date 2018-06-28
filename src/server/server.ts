@@ -3,7 +3,7 @@ import * as bodyParser from "body-parser";
 import { createUser } from "./../user/endpoints/create";
 import { deleteUser } from "./../user/endpoints/delete";
 import { updateUser } from "./../user/endpoints/update";
-import { allUsers } from "./../user/endpoints/findAll";
+import { allUsers } from "../user/endpoints/users";
 import { login } from "./endpoints/login";
 import { home } from "./endpoints/home";
 import * as exphbs from "express-handlebars";
@@ -45,7 +45,7 @@ app.use("/", createPost);
 app.use("/", updatePost);
 app.use("/api/users", createUser);
 app.use("/api/users", deleteUser);
-app.use("/api/users", updateUser);
+app.use("/", updateUser);
 app.use("/", allUsers);
 app.get("/logout", (req, res) => {
   req.session.destroy(err => {

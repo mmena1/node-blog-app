@@ -14,7 +14,15 @@
             <h2>{{username}}</h2>
             <p>{{email}}</p>
         </div>
-        {{/each}}
+        <form action="/users" method="post">
+            <input type="hidden" name="user_id" value="{{id}}">
+            <input type="submit" value="Delete">
+        </form>
+        <form action="/user/update" method="get">
+            <input type="hidden" name="user_id" value="{{id}}">
+            <input type="submit" value="Update">
+        </form>
+        <hr> {{/each}}
     </div>
     <hr>
 </body>

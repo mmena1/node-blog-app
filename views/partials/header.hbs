@@ -1,7 +1,7 @@
 <header>
     {{#if user}}
     <div>
-        <p>Hi, {{user}}</p>
+        <p>Hi, {{user.username}}</p>
         <input type="button" value="Log out" onclick="location.href='/logout';">
     </div>
     {{else}}

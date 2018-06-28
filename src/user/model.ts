@@ -11,7 +11,7 @@ export interface UserModel extends Sequelize.Model<UserInstance, UserAttrs> {}
 export interface UserAttrs {
   id?: number;
   username: string;
-  password: string;
+  password?: string;
   email: string;
 }
 
