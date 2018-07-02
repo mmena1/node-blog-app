@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import * as chai from "chai";
-import { patchUser } from "../../../src/user/endpoints/update";
+import { patchUser } from "../../../src/user/endpoints/updateApi";
 import { UserAttrs, User } from "../../../src/user/model";
 import { sequelize } from "../../../src/models/sequelize";
 import * as chaiAsPromised from "chai-as-promised";

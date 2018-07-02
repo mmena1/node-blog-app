@@ -1,8 +1,11 @@
+import * as Promise from "bluebird";
 import { Router } from "express";
 import renderAttrs from "../../util/renderAttrs";
 import findAllPosts from "../../post/operations/findAllByUser";
 import _delete from "../../post/operations/delete";
 import { Post } from "../../post/model";
+import findAllFollowedUsers from "../../followedUsers/operations/findAll";
+import findAllByFollowedUsers from "../../post/operations/findAllByFollowedUsers";
 
 export const home = Router();
 home.get("/api", (req, res) => {
@@ -13,21 +16,32 @@ home.get("/api", (req, res) => {
 });
 
 home.get("/home", (req, res) => {
-  findAllPosts(req.session.user.id).then(posts => {
+  const id = req.session.user.id;
+  return Promise.join(
+    findAllPosts(id),
+    findAllFollowedUsers(id),
+    (ownPosts, followedUsers) => {
+      return findAllByFollowedUsers(followedUsers).then(followedPosts => {
+        return { ownPosts, followedPosts };
+      });
+    }
+  ).then(posts => {
     const values = {
       ...renderAttrs(req),
       pageTitle: `Welcome ${req.session.user.username}!`,
       welcomeMessage: "This is your home page"
     };
-    if (posts.length > 0) {
+    if (posts.ownPosts.length > 0) {
       res.render("home.hbs", {
         ...values,
-        posts
+        posts: posts.ownPosts,
+        followedPosts: posts.followedPosts
       });
     } else {
       res.render("home.hbs", {
         ...values,
-        message: "I don't have posts yet :("
+        message: "I don't have posts yet :(",
+        followedPosts: posts.followedPosts
       });
     }
   });

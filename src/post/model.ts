@@ -16,6 +16,11 @@ export interface PostAttrs {
   createdAt?: Date;
 }
 
+export interface PostsAndUser {
+  post: PostAttrs,
+  username: string
+}
+
 export const Post = sequelize.define<PostInstance, PostAttrs>("Post", {
   id: {
     type: Sequelize.INTEGER,

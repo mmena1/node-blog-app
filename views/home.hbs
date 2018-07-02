@@ -9,10 +9,10 @@
 <body>
     {{> header}}
     <p>{{welcomeMessage}}</p>
-    <p>Username: {{user.username}}</p>
-    <p>Email: {{user.email}}</p>
+    <p>Username: {{sessionUser.username}}</p>
+    <p>Email: {{sessionUser.email}}</p>
     <input type="button" value="Create post" onclick="location.href='/newPost';">
-    <p>Only owned posts go here...</p>
+    <p><i>Owned posts go here...</i></p>
     <div>
         {{#if message}} {{message}} {{/if}} {{#each posts}}
         <article>
@@ -28,6 +28,21 @@
             <input type="submit" value="Update">
         </form>
         <hr> {{/each}}
+    </div>
+    <p><i>Posts from followed users go here...</i></p>
+    <div>
+        {{#if followedPosts}}
+        {{#each followedPosts}}
+        <article>
+            <h1>{{post.title}}</h1>
+            <p>{{post.content}}</p>
+            <p>
+                <small>Author: {{username}}</small>
+            </p>
+        </article>
+        <hr> {{/each}} {{else}}
+        <p>Nothing to follow...</p>
+        {{/if}}
     </div>
 </body>
 {{> footer}}

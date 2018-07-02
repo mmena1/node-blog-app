@@ -11,17 +11,28 @@
     <div>
         {{#if message}} {{message}} {{/if}} {{#each users}}
         <div class="col-md-12">
-            <h2>{{username}}</h2>
-            <p>{{email}}</p>
+            <h2>{{user.username}}</h2>
+            <p>{{user.email}}</p>
         </div>
         <form action="/users" method="post">
-            <input type="hidden" name="user_id" value="{{id}}">
+            <input type="hidden" name="user_id" value="{{user.id}}">
             <input type="submit" value="Delete">
         </form>
         <form action="/user/update" method="get">
-            <input type="hidden" name="user_id" value="{{id}}">
+            <input type="hidden" name="user_id" value="{{user.id}}">
             <input type="submit" value="Update">
         </form>
+        {{#if following}} {{#unless ownUser}}
+        <form action="/users/unfollow" method="post">
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <input type="submit" value="Unfollow">
+        </form>
+        {{/unless}} {{else}}
+        <form action="/users/follow" method="post">
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <input type="submit" value="Follow">
+        </form>
+        {{/if}}
         <hr> {{/each}}
     </div>
     <hr>

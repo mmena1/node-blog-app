@@ -7,40 +7,25 @@ import create from "../../src/user/operations/create";
 import login from "../../src/user/operations/login";
 import { sequelize } from "../../src/models/sequelize";
 
-describe("GET /api", function() {
+describe("GET /home", function() {
   const user1: UserAttrs = {
     username: "usertest",
     password: "123456",
     email: "usertest@sb.com"
   };
   beforeEach(() => {
-    return User.destroy({
-      where: {
-        id: {
-          [sequelize.Op.gt]: 0
-        }
-      }
-    });
+    return User.truncate({cascade: true});
   });
 
-  afterEach(() => {
-    return User.destroy({
-      where: {
-        id: {
-          [sequelize.Op.gt]: 0
-        }
-      }
-    });
-  });
   it("should return welcome message", function() {
     return create(user1).then(user => {
       return expect(
-        login("usertest@sb.com", "123456")
+        login(user.email, "123456")
       ).to.eventually.be.fulfilled.then(token => {
         return request(app)
-          .get("/")
+          .get("/home")
           .set("authorization", token.token)
-          .expect(200)
+          .expect(200) // FIXME getting error 500
           .then(res => {
             expect(res.text).to.contain("Welcome");
           });
@@ -50,15 +35,13 @@ describe("GET /api", function() {
   it("should return 403 error with invalid token", function() {
     return create(user1).then(user => {
       return expect(
-        login("usertest@sb.com", "123456")
+        login(user.email, "123456")
       ).to.eventually.be.fulfilled.then(token => {
         return request(app)
-          .get("/api")
+          .get("/home")
           .set("authorization", token.token + "123asd")
-          .expect(403)
+          .expect(403) // FIXME getting status 302
           .then(res => {
-            console.log(res);
-
             expect(res.text).to.contain(
               "You have no access permissions to view this resource"
             );
